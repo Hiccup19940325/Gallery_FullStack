@@ -6,6 +6,10 @@
 
 - db: MongoDB(Auth & Gallery )
 
+- test: Unit test(jest)
+
+- lint: Next.js builtin linting(frontend) and prettier, Eslint(backend)
+
 ## ❯ Getting Started
 
 ### Step 1: Set up the Development Environment

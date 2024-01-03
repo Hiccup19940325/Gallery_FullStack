@@ -1,6 +1,6 @@
-import * as admin from 'firebase-admin';
+import * as admin from "firebase-admin"
 // import { IServiceAccount } from '../common/types';
-import serviceAccount from './firebase.json';
+import serviceAccount from "./firebase.json"
 
 const credential = {
     projectId: serviceAccount.project_id,
@@ -12,4 +12,4 @@ admin.initializeApp({
     credential: admin.credential.cert(credential)
 })
 
-export default admin;
+export default admin

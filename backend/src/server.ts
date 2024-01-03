@@ -21,14 +21,14 @@ class Server {
     public port = process.env.PORT || 5000
 
     constructor() {
-        this.app = express.default();
+        this.app = express.default()
     }
 
     public async run(): Promise<void> {
-        this.app.use(express.json({ limit: '50mb' }))
+        this.app.use(express.json({ limit: "50mb" }))
         this.app.use(express.urlencoded({ extended: true }))
         this.app.use(Routes)
-        this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+        this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 
         await connectDB()
 

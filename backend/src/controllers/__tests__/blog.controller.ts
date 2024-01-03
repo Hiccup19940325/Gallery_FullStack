@@ -1,9 +1,9 @@
-import request from 'supertest'
-import faker from 'faker'
-import * as http from "http";
-import { createServer } from '../../common/testServer';
+import request from "supertest"
+import faker from "faker"
+import * as http from "http"
+import { createServer } from "../../common/testServer"
 
-let server: http.Server;
+let server: http.Server
 
 beforeAll(async () => {
     server = (await createServer()).listen()

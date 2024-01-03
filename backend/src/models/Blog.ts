@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
 const blogSchema = new mongoose.Schema(
     {
@@ -7,7 +7,7 @@ const blogSchema = new mongoose.Schema(
             trim: true,
             required: true,
             maxlength: 50,
-            text: true,
+            text: true
         },
         image: {
             public_id: {
@@ -21,9 +21,10 @@ const blogSchema = new mongoose.Schema(
         },
         owner: {
             type: String,
-            required: true,
+            required: true
         }
     },
-    { timestamps: true });
+    { timestamps: true }
+)
 
-export default mongoose.model("Blog", blogSchema);
+export default mongoose.model("Blog", blogSchema)

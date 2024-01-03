@@ -1,4 +1,4 @@
-import { object, string } from 'yup'
+import { object, string } from "yup"
 
 export const blogSchema = object({
     body: object({
