@@ -1,10 +1,10 @@
 # Gallery Nextjs + Node(Typescript) Demonstration
 
-- frontend: react 18.18.1(hooks / redux-toolkit / axios)
+- frontend: Next.js 14.0.4(hooks / redux-toolkit / axios)
 
-- backend: node.js(express / Two-Way-Auth <firebase>)
+- backend: node.js 18.18.1(express / Firebase-Auth, Gallery-CRUD)
 
-- db: MongoDB(Auth & Gallery CRUD)
+- db: MongoDB(Auth & Gallery )
 
 ## ❯ Getting Started
 

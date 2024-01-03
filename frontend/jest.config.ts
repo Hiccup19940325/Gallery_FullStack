@@ -9,7 +9,7 @@ import nextJest from 'next/jest.js'
 const config: Config = {
   coverageProvider: "v8",
   testEnvironment: "jsdom",
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 };
 
 const createJestConfig = nextJest({
