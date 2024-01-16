@@ -1,37 +1,26 @@
 import { Response, Request } from "express"
-import User from "../models/user"
+import { createOrUpdateHandler, currentUserHandler } from "../services/auth.service"
 
 export const createOrUpdateUser = async (req: Request, res: Response) => {
     const email = req.body.user
 
-    const user = await User.findOneAndUpdate(
-        { email },
-        { name: email.split("@")[0] },
-        { new: true }
-    )
+    const result = await createOrUpdateHandler(email);
 
-    if (user) {
-        console.log("User Updated", user)
-        res.json(user)
-    } else {
-        const newUser = await new User({
-            email,
-            name: email.split("@")[0]
-        }).save()
-
-        console.log("User Created", newUser)
-        res.json(newUser)
+    if (!result) {
+        return res.status(500).json({ message: `Auth failed with email : ${email}` })
     }
+
+    return res.status(200).json(result);
 }
 
 export const currentUser = async (req: Request, res: Response) => {
-    try {
-        const user = await User.findOne({
-            email: req.body.user
-        }).exec()
-        console.log("current User", user)
-        res.json(user)
-    } catch (error) {
-        console.log(error)
+    const email = req.body.user;
+
+    const result = await currentUserHandler(email);
+
+    if (!result) {
+        return res.status(500).json({ message: `Authorization is failed` })
     }
+
+    return res.status(200).json(result);
 }

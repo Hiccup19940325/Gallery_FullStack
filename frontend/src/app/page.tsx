@@ -6,7 +6,7 @@ import CreateModal from '@/components/album/createAlbum'
 import AlbumCard from '@/components/album/AlbumCard'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
-import { Suspense, useEffect } from 'react'
+import { Suspense, useEffect, useMemo } from 'react'
 import useAlbum from '@/hook/useAlbum'
 import Loading from './loading'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -17,8 +17,13 @@ export default function Home() {
 
   useEffect(() => {
     initLoad();
-    console.log(backgroundImg)
   }, [initLoad])
+
+  const showAlbumCards = useMemo(() => {
+    return (
+      albums.length > 0 && albums.map((item, i) => <AlbumCard key={i} info={item} />
+      ))
+  }, [albums])
 
   return (
     <>
@@ -41,9 +46,7 @@ export default function Home() {
               endMessage={<p className='text-center absolute left-1/2 -translate-x-1/2 text-white mt-3 text-3xl '>You read all posts</p>}
             >
               <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 justify-items-stretch place-items-stretch'>
-                {
-                  albums.map((item, i) => <AlbumCard key={i} info={item} />)
-                }
+                {showAlbumCards}
               </div>
             </InfiniteScroll>
           </div>

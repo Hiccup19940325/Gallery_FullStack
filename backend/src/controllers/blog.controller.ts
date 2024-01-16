@@ -1,74 +1,54 @@
-import Blog from "../models/Blog"
 import { Response, Request } from "express"
+import { createAlbum, readAlbum, updateAlbum, removeAlbum } from "../services/blog.service"
 
 export const create = async (req: Request, res: Response) => {
-    try {
-        await new Blog(req.body).save()
+    const page = Number(req.params.page)
+    const limit = Number(req.params.limit)
 
-        const page = Number(req.params.page)
-        const limit = Number(req.params.limit)
+    const result = await createAlbum(req.body, page, limit);
 
-        const blogs = await Blog.find({})
-            .limit(limit * 1)
-            .skip((page - 1) * limit)
-            .sort({ updatedAt: -1 })
-            .exec()
-        res.json(blogs)
-    } catch (error) {
-        console.log(error)
-        res.status(400).json({
-            error: (error as Error).message
-        })
+    if (!result) {
+        return res.status(500).json({ message: `Creation failed ` })
     }
+
+    return res.status(200).json(result)
 }
 
 export const read = async (req: Request, res: Response) => {
-    try {
-        const page = Number(req.params.page)
-        const limit = Number(req.params.limit)
-        console.log(page, limit)
+    const page = Number(req.params.page)
+    const limit = Number(req.params.limit)
 
-        const blogs = await Blog.find({})
-            .limit(limit * 1)
-            .skip((page - 1) * limit)
-            .sort({ updatedAt: -1 })
-            .exec()
-        res.json(blogs)
-    } catch (error) {
-        console.error(error)
-        res.status(400).send("fetch One item from Product failed..")
+    const result = await readAlbum(page, limit);
+
+    if (!result) {
+        return res.status(500).json({ message: `reading is failed ` })
     }
+
+    return res.status(200).json(result)
+
 }
 
 export const update = async (req: Request, res: Response) => {
-    try {
-        let updated
-        if (req.params._flag == "true") {
-            updated = await Blog.findOneAndUpdate(
-                { _id: req.params._id },
-                { name: req.body.name },
-                { new: true }
-            ).exec()
-        } else {
-            console.log("run data change")
-            updated = await Blog.findOneAndUpdate({ _id: req.params._id }, req.body, {
-                new: true
-            }).exec()
-        }
-        res.json(updated)
-    } catch (err) {
-        console.log("PRODUCT UPDATE ERROR ----> ", err)
-        res.status(400).json({
-            err: (err as Error).message
-        })
+    const flag = req.params._flag;
+    const id = req.params._id;
+
+    const result = await updateAlbum(flag, id, req.body);
+
+    if (!result) {
+        return res.status(500).json({ message: `upgrading is failed` })
     }
+
+    return res.status(200).json(result)
+
 }
 
 export const removeData = async (req: Request, res: Response) => {
-    try {
-        const deleted = await Blog.findByIdAndDelete(req.params._id).exec()
-        res.json(deleted)
-    } catch (error) {
-        res.status(400).json("delete One in Blog is failed ..")
+    const result = await removeAlbum(req.params._id);
+
+    if (!result) {
+        return res.status(500).json({ message: `deleting is failed` })
     }
+
+    return res.status(200).json(result)
+
 }
